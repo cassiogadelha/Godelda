@@ -1,26 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://dcf0d5lnjw6iy"]
+[gd_scene load_steps=5 format=3 uid="uid://dcf0d5lnjw6iy"]
 
 [ext_resource type="Script" path="res://Scenes/Player/player.gd" id="1_jn45a"]
 [ext_resource type="PackedScene" uid="uid://ckrloupdq5lk6" path="res://Scenes/CameraController/camera_controller.tscn" id="2_82edf"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_eudm0"]
+[ext_resource type="PackedScene" uid="uid://dkkl6utx5gvjm" path="res://Scenes/Characters/godette_skin.tscn" id="3_qt82c"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xtxkp"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yh2sf"]
-albedo_color = Color(0, 1, 1, 1)
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_leq7o"]
-material = SubResource("StandardMaterial3D_yh2sf")
-radius = 0.1
-height = 0.5
-
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_jn45a")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-mesh = SubResource("CapsuleMesh_eudm0")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -31,6 +18,4 @@ transform = Transform3D(1, 0, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, 
 min_limit_x = -0.8
 max_limit_x = -0.2
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.0540788, 0.998537, 0, -0.998537, 0.0540788, 0, 1.53932, -0.581355)
-mesh = SubResource("CapsuleMesh_leq7o")
+[node name="GodetteSkin" parent="." instance=ExtResource("3_qt82c")]
