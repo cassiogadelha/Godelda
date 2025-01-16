@@ -1,10 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://cbqeh2avabg1x"]
+[gd_scene load_steps=6 format=3 uid="uid://cbqeh2avabg1x"]
 
 [ext_resource type="PackedScene" uid="uid://dcf0d5lnjw6iy" path="res://Scenes/Player/player.tscn" id="1_j6v41"]
 
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mydeh"]
+sky_top_color = Color(0.8, 0.92549, 0.996078, 1)
+
 [sub_resource type="Sky" id="Sky_50nxw"]
+sky_material = SubResource("ProceduralSkyMaterial_mydeh")
 
 [sub_resource type="Environment" id="Environment_d4nqy"]
+background_mode = 2
 sky = SubResource("Sky_50nxw")
 ambient_light_color = Color(1, 1, 1, 1)
 
