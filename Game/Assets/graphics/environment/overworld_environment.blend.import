@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://daovb46045rrx"
-path="res://.godot/imported/overworld_environment.blend-06206223de6b0f41b0f47bd4d7f13859.scn"
+path="res://.godot/imported/overworld_environment.blend-80d9948069db720a1a25bc0dfaed1262.scn"
 
 [deps]
 
-source_file="res://graphics/environment/overworld_environment.blend"
-dest_files=["res://.godot/imported/overworld_environment.blend-06206223de6b0f41b0f47bd4d7f13859.scn"]
+source_file="res://Assets/graphics/environment/overworld_environment.blend"
+dest_files=["res://.godot/imported/overworld_environment.blend-80d9948069db720a1a25bc0dfaed1262.scn"]
 
 [params]
 

@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://dwjrrhoj6ltyx"
-path="res://.godot/imported/castle.blend-e30e73426b2e75678218e6afd023e745.scn"
+path="res://.godot/imported/castle.blend-d890c60ef64b0f19f0b831ca8aac4c2e.scn"
 
 [deps]
 
-source_file="res://graphics/environment/castle.blend"
-dest_files=["res://.godot/imported/castle.blend-e30e73426b2e75678218e6afd023e745.scn"]
+source_file="res://Assets/graphics/environment/castle.blend"
+dest_files=["res://.godot/imported/castle.blend-d890c60ef64b0f19f0b831ca8aac4c2e.scn"]
 
 [params]
 
