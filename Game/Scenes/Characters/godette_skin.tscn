@@ -1,21 +1,15 @@
-[gd_scene load_steps=36 format=3 uid="uid://dkkl6utx5gvjm"]
+[gd_scene load_steps=34 format=3 uid="uid://dkkl6utx5gvjm"]
 
 [ext_resource type="PackedScene" uid="uid://bctcp65yp8t3f" path="res://Assets/graphics/characters/godette/godette.glb" id="1_mhflb"]
 [ext_resource type="Script" path="res://Scenes/Characters/godette_skin.gd" id="2_rpqw2"]
-[ext_resource type="PackedScene" uid="uid://cp757r6txb0j6" path="res://Assets/graphics/weapons/sword_1handed.gltf" id="3_s8mp7"]
 [ext_resource type="Texture2D" uid="uid://bgh8x0rsl78s5" path="res://Assets/graphics/characters/godette/godette_godette_faces.png" id="3_wftmb"]
 [ext_resource type="Texture2D" uid="uid://cbf5176yt1e2d" path="res://Assets/graphics/weapons/barbarian_texture.png" id="4_mu8dp"]
 [ext_resource type="PackedScene" uid="uid://dydnnq3ww2uyk" path="res://Assets/graphics/weapons/shield.gltf.glb" id="5_3n04n"]
 [ext_resource type="PackedScene" uid="uid://02ix7c6cfe1u" path="res://Assets/graphics/weapons/wand.gltf" id="5_ttfro"]
+[ext_resource type="PackedScene" uid="uid://cajbcw8oo7sxi" path="res://Scenes/Weapons/sword.tscn" id="6_rvnxs"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c5wuy"]
 albedo_texture = ExtResource("3_wftmb")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fg7f8"]
-albedo_texture = ExtResource("4_mu8dp")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6klrd"]
-albedo_texture = ExtResource("4_mu8dp")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a4tn3"]
 albedo_texture = ExtResource("4_mu8dp")
@@ -103,7 +97,7 @@ filter_enabled = true
 filters = ["Rig/Skeleton3D:chest", "Rig/Skeleton3D:elbowIK.l", "Rig/Skeleton3D:elbowIK.r", "Rig/Skeleton3D:hand.l", "Rig/Skeleton3D:hand.r", "Rig/Skeleton3D:handIK.l", "Rig/Skeleton3D:handIK.r", "Rig/Skeleton3D:handslot.l", "Rig/Skeleton3D:handslot.r", "Rig/Skeleton3D:head", "Rig/Skeleton3D:hips", "Rig/Skeleton3D:lowerarm.l", "Rig/Skeleton3D:lowerarm.r", "Rig/Skeleton3D:root", "Rig/Skeleton3D:spine", "Rig/Skeleton3D:upperarm.l", "Rig/Skeleton3D:upperarm.r", "Rig/Skeleton3D:wrist.l", "Rig/Skeleton3D:wrist.r"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_ist60"]
-graph_offset = Vector2(-458.331, 3.6622)
+graph_offset = Vector2(-371.986, 339.761)
 nodes/AttackOneShot/node = SubResource("AnimationNodeOneShot_400kx")
 nodes/AttackOneShot/position = Vector2(140, 260)
 nodes/AttackStateMachine/node = SubResource("AnimationNodeStateMachine_17d2g")
@@ -176,11 +170,8 @@ transform = Transform3D(-0.999999, 4.68394e-07, 4.5731e-07, 3.978e-07, -5.88753e
 bone_name = "handslot.r"
 bone_idx = 13
 
-[node name="sword_1handed2" parent="Rig/Skeleton3D/RightHandSlot" index="0" instance=ExtResource("3_s8mp7")]
-
-[node name="sword_1handed" parent="Rig/Skeleton3D/RightHandSlot/sword_1handed2" index="0"]
-material_override = SubResource("StandardMaterial3D_fg7f8")
-surface_material_override/0 = SubResource("StandardMaterial3D_6klrd")
+[node name="Sword" parent="Rig/Skeleton3D/RightHandSlot" index="0" instance=ExtResource("6_rvnxs")]
+transform = Transform3D(1, -2.84217e-14, -4.79082e-15, 0, 1, 5.68434e-14, 6.72509e-15, 0, 1, 0, 0, 0)
 
 [node name="wand2" parent="Rig/Skeleton3D/RightHandSlot" index="1" instance=ExtResource("5_ttfro")]
 
@@ -216,5 +207,4 @@ autostart = true
 
 [connection signal="timeout" from="BlinkTimer" to="." method="_on_blink_timer_timeout"]
 
-[editable path="Rig/Skeleton3D/RightHandSlot/sword_1handed2"]
 [editable path="Rig/Skeleton3D/RightHandSlot/wand2"]

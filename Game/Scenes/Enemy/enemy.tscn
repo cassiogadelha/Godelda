@@ -14,3 +14,7 @@ script = ExtResource("1_mgn18")
 [node name="Timers" type="Node" parent="."]
 
 [node name="AttackTimer" type="Timer" parent="Timers"]
+
+[node name="InvulnerableTimer" type="Timer" parent="Timers"]
+wait_time = 0.8
+one_shot = true

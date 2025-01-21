@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://d36uxisc84scc" path="res://Scenes/Enemy/enemy.tscn" id="1_t7mdy"]
 [ext_resource type="PackedScene" uid="uid://v1j12fheriyx" path="res://Assets/graphics/characters/skeleton warrior/Skeleton_Warrior.glb" id="2_0dj0r"]
 [ext_resource type="Script" path="res://Scenes/Enemy/skeleton_warrior.gd" id="2_75cfq"]
-[ext_resource type="PackedScene" uid="uid://cqxi7o0pyi1mt" path="res://Assets/graphics/weapons/bone.gltf.glb" id="3_y6emp"]
+[ext_resource type="PackedScene" uid="uid://dylg0ls4750w7" path="res://Scenes/Weapons/bone.tscn" id="4_ioy8q"]
 [ext_resource type="PackedScene" uid="uid://dydnnq3ww2uyk" path="res://Assets/graphics/weapons/shield.gltf.glb" id="5_j5sba"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8sxoh"]
@@ -143,7 +143,8 @@ transform = Transform3D(-0.220919, 0.761972, -0.608763, -0.617506, 0.373856, 0.6
 bone_name = "handslot.r"
 bone_idx = 13
 
-[node name="bone_gltf" parent="Skin/Rig/Skeleton3D/BoneAttachment3D" index="0" instance=ExtResource("3_y6emp")]
+[node name="Bone" parent="Skin/Rig/Skeleton3D/BoneAttachment3D" index="0" instance=ExtResource("4_ioy8q")]
+transform = Transform3D(1, -5.96046e-08, 8.9407e-08, -1.49012e-07, 1, 1.78814e-07, 0, 1.3411e-07, 1, 0.0229997, 0.137817, 0.0479634)
 
 [node name="BoneAttachment3D2" type="BoneAttachment3D" parent="Skin/Rig/Skeleton3D" index="11"]
 transform = Transform3D(0.55879, -0.513883, 0.650905, 0.670631, -0.181718, -0.719188, 0.48786, 0.838393, 0.243083, 0.329405, 0.796775, 0.48265)

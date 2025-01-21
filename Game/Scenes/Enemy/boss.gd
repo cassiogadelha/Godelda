@@ -45,7 +45,7 @@ func  melee_attack_animation() -> void:
     $AnimationTree.set("parameters/AttackOneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 
 
-func _on_area_3d_body_entered(body:Node3D) -> void:
+func _on_area_3d_body_entered(_body: Node3D) -> void:
     if spinning:
         await get_tree().create_timer(rng.randf_range(1.0, 2.0)).timeout
         var tween = create_tween()
@@ -53,3 +53,7 @@ func _on_area_3d_body_entered(body:Node3D) -> void:
         tween.tween_method(_spin_transition, 1.0, 0.0, 0.3)
         spinning = false
         $Timers/AttackTimer.start()
+
+func hit() -> void:
+    if not $Timers/InvulnerableTimer.time_left:
+        $Timers/InvulnerableTimer.start()
