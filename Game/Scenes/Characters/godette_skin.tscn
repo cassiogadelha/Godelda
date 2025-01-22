@@ -55,6 +55,8 @@ animation = &"Block"
 animation = &"Spellcast_Shoot"
 
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_tth1q"]
+fadein_time = 0.3
+fadeout_time = 0.3
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_p183o"]
 animation = &"Idle"
@@ -97,7 +99,7 @@ filter_enabled = true
 filters = ["Rig/Skeleton3D:chest", "Rig/Skeleton3D:elbowIK.l", "Rig/Skeleton3D:elbowIK.r", "Rig/Skeleton3D:hand.l", "Rig/Skeleton3D:hand.r", "Rig/Skeleton3D:handIK.l", "Rig/Skeleton3D:handIK.r", "Rig/Skeleton3D:handslot.l", "Rig/Skeleton3D:handslot.r", "Rig/Skeleton3D:head", "Rig/Skeleton3D:hips", "Rig/Skeleton3D:lowerarm.l", "Rig/Skeleton3D:lowerarm.r", "Rig/Skeleton3D:root", "Rig/Skeleton3D:spine", "Rig/Skeleton3D:upperarm.l", "Rig/Skeleton3D:upperarm.r", "Rig/Skeleton3D:wrist.l", "Rig/Skeleton3D:wrist.r"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_ist60"]
-graph_offset = Vector2(-371.986, 339.761)
+graph_offset = Vector2(-338.216, 152.869)
 nodes/AttackOneShot/node = SubResource("AnimationNodeOneShot_400kx")
 nodes/AttackOneShot/position = Vector2(140, 260)
 nodes/AttackStateMachine/node = SubResource("AnimationNodeStateMachine_17d2g")
@@ -174,9 +176,13 @@ bone_idx = 13
 transform = Transform3D(1, -2.84217e-14, -4.79082e-15, 0, 1, 5.68434e-14, 6.72509e-15, 0, 1, 0, 0, 0)
 
 [node name="wand2" parent="Rig/Skeleton3D/RightHandSlot" index="1" instance=ExtResource("5_ttfro")]
+visible = false
 
 [node name="wand" parent="Rig/Skeleton3D/RightHandSlot/wand2" index="0"]
 material_override = SubResource("StandardMaterial3D_a4tn3")
+
+[node name="MagicSpawnPoint" type="Marker3D" parent="Rig/Skeleton3D/RightHandSlot/wand2/wand" index="0"]
+transform = Transform3D(1, 0, -8.3819e-09, 0, 1, 0, 0, 3.35276e-08, 1, -0.0369034, 0.674073, 0.00272822)
 
 [node name="LeftHandSlot" type="BoneAttachment3D" parent="Rig/Skeleton3D" index="7"]
 transform = Transform3D(-0.999999, -4.01335e-07, -3.67903e-07, -4.65843e-07, -5.30967e-07, 0.999999, -4.7957e-07, 0.999999, 6.23449e-07, 0.883132, 1.04926, -6.80517e-07)

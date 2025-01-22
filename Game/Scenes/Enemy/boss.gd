@@ -10,6 +10,11 @@ var spin_speed := 6.0
 
 var spinning := false
 
+var can_damage_toggle := false
+
+func _process(_delta: float) -> void:
+    attack_logic()
+
 func _physics_process(delta: float) -> void:
     move_to_player(delta)
 
@@ -31,6 +36,7 @@ func spin_attack_animation():
 
     $Timers/AttackTimer.stop()
     spinning = true
+    can_damage_toggle = true
 
 func _spin_transition(value: float) -> void:
     $AnimationTree.set("parameters/SpinBlend/blend_amount", value)
@@ -39,6 +45,14 @@ func range_attack_animation() -> void:
     stop_movement(1.5, 1.5)
     attack_animation.animation = simple_attacks['range']
     $AnimationTree.set("parameters/AttackOneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+
+func shoot_fireball() -> void:
+    var _direction: Vector3= (player.position - position).normalized()
+    var _direction_2d := Vector2(_direction.x, _direction.z)
+
+    var _position: Vector3 = $Skin/Rig/Skeleton3D/Nagonford_Axe/Nagonford_Axe/MagicSpawnPoint.global_position
+    cast_spell.emit('fireball', _position, _direction_2d, 3.0)
+    
 
 func  melee_attack_animation() -> void:
     attack_animation.animation = simple_attacks['slice' if rng.randi() % 2 else 'spin']
@@ -54,6 +68,17 @@ func _on_area_3d_body_entered(_body: Node3D) -> void:
         spinning = false
         $Timers/AttackTimer.start()
 
+        can_damage_toggle = false
+
 func hit() -> void:
     if not $Timers/InvulnerableTimer.time_left:
         $Timers/InvulnerableTimer.start()
+
+func can_damage(value: bool) -> void:
+    can_damage_toggle = value
+
+func attack_logic() -> void:
+    if can_damage_toggle:
+        var collider = $Skin/Rig/Skeleton3D/Nagonford_Axe/Nagonford_Axe/RayCast3D.get_collider()
+        if collider and 'hit' in collider:
+            collider.hit()

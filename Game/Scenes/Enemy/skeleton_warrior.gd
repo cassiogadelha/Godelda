@@ -9,3 +9,6 @@ func _on_attack_timer_timeout() -> void:
 
     if position.distance_to(player.position) < attack_radius:
         $AnimationTree.set("parameters/OneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+
+func can_damage(value: bool) -> void:
+    $Skin/Rig/Skeleton3D/BoneAttachment3D/Bone.can_damage = value
