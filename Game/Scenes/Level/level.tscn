@@ -1,8 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://cbqeh2avabg1x"]
+[gd_scene load_steps=7 format=3 uid="uid://cbqeh2avabg1x"]
 
 [ext_resource type="Script" path="res://Scenes/Level/level.gd" id="1_5y2b5"]
 [ext_resource type="PackedScene" uid="uid://dcf0d5lnjw6iy" path="res://Scenes/Player/player.tscn" id="1_j6v41"]
-[ext_resource type="PackedScene" uid="uid://b7qqqvyk1jec2" path="res://Scenes/Enemy/boss.tscn" id="2_l27au"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mydeh"]
 sky_top_color = Color(0.8, 0.92549, 0.996078, 1)
@@ -30,9 +29,6 @@ transform = Transform3D(1, 0, 0, 0, -0.00842983, 0.999964, 0, -0.999964, -0.0084
 [node name="Entities" type="Node" parent="."]
 
 [node name="Player" parent="Entities" instance=ExtResource("1_j6v41")]
-
-[node name="Boss" parent="Entities" instance=ExtResource("2_l27au")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 17)
 
 [node name="Environment" type="Node3D" parent="."]
 

@@ -18,7 +18,7 @@ extends CharacterBody3D
 @onready var camera : Camera3D = $CameraController/Camera3D
 @onready var godette_skin : Node3D = $GodetteSkin
 @onready var ui: UIPlayer = $UI
-@onready var invul_timer: Timer = $Node3D/InvulTimer
+@onready var invul_timer: Timer = $Timers/InvulTimer
 
 enum spells{
 	FIREBALL,
@@ -30,6 +30,25 @@ var health: int = 5:
 	set(value):
 		ui.update_health(value, value - health)
 		health = value
+		if health <= 0:
+			get_tree().quit()
+
+var energy: int = 100:
+	set(value):
+		energy = value
+		ui.update_energy(min(100, value))
+
+var stamina: int = 100:
+	set(value):
+		ui.update_stamina(stamina, min(100, value))
+		
+		if stamina == 100 and value < 100:
+			ui.change_stamina_alpha(1.0)
+
+		if value == 100:
+			ui.change_stamina_alpha(0.0)
+
+		stamina = clamp(value, 0, 100)
 
 signal cast_spell(type: String, pos: Vector3, direction: Vector2, size: float)
 
@@ -103,10 +122,11 @@ func move_logic(delta: float) -> void:
 
 func jump_logic(delta: float) -> void:
 	if is_on_floor():
-		if Input.is_action_just_pressed("jump"):
+		if Input.is_action_just_pressed("jump") and stamina >= 20:
 			velocity.y = -jump_velocity
 			do_squash_and_stretch(1.2, 0.15)
 			godette_skin.set_move_state("Jump")
+			stamina -= 20
 
 	else:
 		godette_skin.set_move_state("Idle")
@@ -117,11 +137,14 @@ func jump_logic(delta: float) -> void:
 
 func ability_logic() -> void:
 	if Input.is_action_just_pressed("ability"):
-		if weapon_active:
+		if weapon_active and stamina >= 5:
+			stamina -= 5
 			godette_skin.attack()
 		else:
-			godette_skin.cast_spell()
-			stop_movement(0.3, 0.8)
+			if energy >= 20:
+				godette_skin.cast_spell()
+				stop_movement(0.3, 0.8)
+				energy -= 20
 
 	defend = Input.is_action_pressed("block")
 
@@ -158,3 +181,11 @@ func shoot_magic(pos: Vector3) -> void:
 		cast_spell.emit("fireball", pos, last_movement_input, 1.0)
 	else:
 		health += 1
+
+
+func _on_energy_recovery_timer_timeout() -> void:
+	energy += 1
+
+
+func _on_stamina_recovery_timer_timeout() -> void:
+	stamina += 1

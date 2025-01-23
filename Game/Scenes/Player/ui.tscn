@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://b4nu862ru4s80"]
+[gd_scene load_steps=5 format=3 uid="uid://b4nu862ru4s80"]
 
 [ext_resource type="Script" path="res://Scenes/Player/ui.gd" id="1_y8yyy"]
 [ext_resource type="Texture2D" uid="uid://3vh0pug1ilge" path="res://Assets/graphics/ui/fire.png" id="2_jq225"]
+[ext_resource type="Texture2D" uid="uid://gi44t0kmhjr8" path="res://Assets/graphics/ui/bar_color.png" id="3_cuc6o"]
+[ext_resource type="Texture2D" uid="uid://ca408dm1c5imy" path="res://Assets/graphics/ui/circle.png" id="4_eju8c"]
 
 [node name="UI" type="Control"]
 layout_mode = 3
@@ -49,7 +51,53 @@ texture = ExtResource("2_jq225")
 expand_mode = 2
 stretch_mode = 4
 
-[node name="Energy" type="Control" parent="Spells"]
+[node name="Energy" type="Control" parent="."]
+layout_mode = 1
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Energy"]
+layout_mode = 1
+offset_right = 150.0
+offset_bottom = 64.0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 50
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Energy/MarginContainer"]
+layout_mode = 2
+texture_under = ExtResource("3_cuc6o")
+texture_progress = ExtResource("3_cuc6o")
+tint_under = Color(0.14902, 0.14902, 0.14902, 1)
+tint_progress = Color(0.219608, 0.435294, 1, 1)
+
+[node name="Stamina" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="Stamina"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Stamina/CenterContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 320
+theme_override_constants/margin_bottom = 300
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Stamina/CenterContainer/MarginContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+value = 100.0
+fill_mode = 4
+texture_under = ExtResource("4_eju8c")
+texture_progress = ExtResource("4_eju8c")
+tint_under = Color(0.14902, 0.14902, 0.14902, 1)
+tint_progress = Color(0.262006, 0.670307, 9.62615e-07, 1)

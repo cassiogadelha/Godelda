@@ -14,6 +14,12 @@ signal cast_spell(type: String, pos: Vector3, direction: Vector2, size: float)
 @export var notice_radius : float = 30.0
 @export var attack_radius : float = 3.0
 
+var health: int = 5:
+	set(value):
+		health = value
+		if health <= 0:
+			queue_free()
+
 var speed_modifier : float = 1.0
 
 var rng: RandomNumberGenerator = RandomNumberGenerator.new()
@@ -49,6 +55,7 @@ func hit() -> void:
 	if not $Timers/InvulnerableTimer.time_left:
 		do_squash_and_stretch(1.2, 0.15)
 		$Timers/InvulnerableTimer.start()
+		health -= 1
 
 func do_squash_and_stretch(value: float, duration: float = 0.1) -> void:
 	var tween: Tween = create_tween()

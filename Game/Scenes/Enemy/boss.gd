@@ -73,6 +73,7 @@ func _on_area_3d_body_entered(_body: Node3D) -> void:
 func hit() -> void:
     if not $Timers/InvulnerableTimer.time_left:
         $Timers/InvulnerableTimer.start()
+        health -= 1
 
 func can_damage(value: bool) -> void:
     can_damage_toggle = value
