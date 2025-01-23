@@ -2,33 +2,51 @@ class_name Player
 extends CharacterBody3D
 
 #jump
-@export var jump_height := 2.25
-@export var jump_time_to_peak := 0.4
-@export var jump_time_to_descent := 0.3 
+@export var jump_height : float = 2.25
+@export var jump_time_to_peak : float = 0.4
+@export var jump_time_to_descent : float = 0.3 
 
-@onready var jump_velocity := ((2.0 * jump_height) / jump_time_to_peak) * -1.0
-@onready var jump_gravity := ((-2.0 * jump_height) / (jump_time_to_peak * jump_time_to_peak))
-@onready var fall_gravity := ((-2.0 * jump_height) / (jump_time_to_descent * jump_time_to_descent))
+@onready var jump_velocity : float = ((2.0 * jump_height) / jump_time_to_peak) * -1.0
+@onready var jump_gravity : float = ((-2.0 * jump_height) / (jump_time_to_peak * jump_time_to_peak))
+@onready var fall_gravity : float = ((-2.0 * jump_height) / (jump_time_to_descent * jump_time_to_descent))
 #source youtu.be/I0e1aGY6hXA?feature=shared
 
-@export var base_speed := 4.0
-@export var run_speed := 6.0
-@export var defend_speed := 2.0
+@export var base_speed : float = 4.0
+@export var run_speed : float = 6.0
+@export var defend_speed : float = 2.0
 
-@onready var camera = $CameraController/Camera3D
-@onready var godette_skin = $GodetteSkin
+@onready var camera : Camera3D = $CameraController/Camera3D
+@onready var godette_skin : Node3D = $GodetteSkin
+@onready var ui: UIPlayer = $UI
+@onready var invul_timer: Timer = $Node3D/InvulTimer
+
+enum spells{
+	FIREBALL,
+	HEAL
+}
+var current_spell: spells = spells.FIREBALL
+
+var health: int = 5:
+	set(value):
+		ui.update_health(value, value - health)
+		health = value
 
 signal cast_spell(type: String, pos: Vector3, direction: Vector2, size: float)
 
-var speed_modifier := 1.0
+var speed_modifier : float = 1.0
 
-var movement_input := Vector2.ZERO
-var last_movement_input := Vector2(0, 1)
+var movement_input : Vector2 = Vector2.ZERO
+var last_movement_input : Vector2 = Vector2(0, 1)
 
-var weapon_active := true
+var weapon_active : bool = true:
+	set(value):
+		weapon_active = value
+		if weapon_active:
+			ui.get_node("Spells").hide()
+		else:
+			ui.get_node("Spells").show()
 
-
-var defend := false:
+var defend : bool = false:
 	set(value):
 		if not defend and value:
 			godette_skin.defend(true)
@@ -36,7 +54,10 @@ var defend := false:
 			godette_skin.defend(false)
 		defend = value
 
-func _physics_process(delta) -> void:
+func _ready() -> void:
+	ui.setup(health)
+
+func _physics_process(delta: float) -> void:
 
 	move_logic(delta)
 	jump_logic(delta)
@@ -50,12 +71,12 @@ func _physics_process(delta) -> void:
 func move_logic(delta: float) -> void:
 	movement_input = Input.get_vector("left", "right", "forward", "backward").rotated(-camera.global_rotation.y)
 
-	var is_running := Input.is_action_pressed("run")
+	var is_running : bool = Input.is_action_pressed("run")
 
-	var velocity_2d := Vector2(velocity.x, velocity.z)
+	var velocity_2d : Vector2 = Vector2(velocity.x, velocity.z)
 
 	if movement_input != Vector2.ZERO:
-		var speed := run_speed if is_running else base_speed
+		var speed : float = run_speed if is_running else base_speed
 		speed = defend_speed if defend else speed
 
 		velocity_2d += movement_input * speed * delta *  10.0
@@ -67,7 +88,7 @@ func move_logic(delta: float) -> void:
 		godette_skin.set_move_state("Running")
 
 		#rotação do player com a camera
-		var target_angle := -movement_input.angle() + PI / 2
+		var target_angle : float = -movement_input.angle() + PI / 2
 		$GodetteSkin.rotation.y = rotate_toward($GodetteSkin.rotation.y, target_angle, 10.0 * delta)
 
 
@@ -90,7 +111,7 @@ func jump_logic(delta: float) -> void:
 	else:
 		godette_skin.set_move_state("Idle")
 
-	var gravity := jump_gravity if velocity.y > 0.0 else fall_gravity
+	var gravity : float = jump_gravity if velocity.y > 0.0 else fall_gravity
 
 	velocity.y += gravity * delta
 
@@ -109,19 +130,31 @@ func ability_logic() -> void:
 		godette_skin.switch_weapon(weapon_active)
 		do_squash_and_stretch(1.2, 0.15)
 
+	if Input.is_action_just_pressed("switch spell") and not godette_skin.attacking:
+		current_spell = spells[spells.keys()[(int(current_spell) + 1) % len(spells)]]
+		ui.update_spells(spells, current_spell)
+
+
 func stop_movement(start_duration: float, end_duration: float) -> void:
-	var tween = create_tween()
+	var tween: Tween = create_tween()
 	tween.tween_property(self, "speed_modifier", 0.0, start_duration)
 	tween.tween_property(self, "speed_modifier", 1.0, end_duration)
 
 func hit() -> void:
-	godette_skin.hit()
-	stop_movement(0.3, 0.3)
+	if not invul_timer.time_left:
+		godette_skin.hit()
+		stop_movement(0.3, 0.3)
+		health -= 1
 
-func do_squash_and_stretch(value: float, duration: float = 0.1):
-	var tween = create_tween()
+		invul_timer.start()
+
+func do_squash_and_stretch(value: float, duration: float = 0.1) -> void:
+	var tween: Tween = create_tween()
 	tween.tween_property(godette_skin, "squash_and_stretch", value, duration)
 	tween.tween_property(godette_skin, "squash_and_stretch", 1.0, duration * 1.8).set_ease(tween.EASE_OUT)
 
-func shoot_fireball(pos: Vector3) -> void:
-	cast_spell.emit("fireball", pos, last_movement_input, 1.0)
+func shoot_magic(pos: Vector3) -> void:
+	if current_spell == spells.FIREBALL:
+		cast_spell.emit("fireball", pos, last_movement_input, 1.0)
+	else:
+		health += 1

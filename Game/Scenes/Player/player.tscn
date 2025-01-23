@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://dcf0d5lnjw6iy"]
+[gd_scene load_steps=6 format=3 uid="uid://dcf0d5lnjw6iy"]
 
 [ext_resource type="Script" path="res://Scenes/Player/player.gd" id="1_jn45a"]
 [ext_resource type="PackedScene" uid="uid://ckrloupdq5lk6" path="res://Scenes/CameraController/camera_controller.tscn" id="2_82edf"]
 [ext_resource type="PackedScene" uid="uid://dkkl6utx5gvjm" path="res://Scenes/Characters/godette_skin.tscn" id="3_qt82c"]
+[ext_resource type="PackedScene" uid="uid://b4nu862ru4s80" path="res://Scenes/Player/ui.tscn" id="4_qyj82"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xtxkp"]
 
@@ -21,3 +22,11 @@ min_limit_x = -0.8
 max_limit_x = -0.2
 
 [node name="GodetteSkin" parent="." instance=ExtResource("3_qt82c")]
+
+[node name="UI" parent="." instance=ExtResource("4_qyj82")]
+
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="InvulTimer" type="Timer" parent="Node3D"]
+wait_time = 0.8
+one_shot = true
