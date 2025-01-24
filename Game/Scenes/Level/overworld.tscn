@@ -1,0 +1,61 @@
+[gd_scene load_steps=8 format=3 uid="uid://civwb0sr8ycch"]
+
+[ext_resource type="PackedScene" uid="uid://cbqeh2avabg1x" path="res://Scenes/Level/level.tscn" id="1_b0lcc"]
+[ext_resource type="PackedScene" uid="uid://qj3rc7155htl" path="res://Scenes/Level/overworld_skin.tscn" id="2_ctd8k"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jtyxs"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_nj3uc"]
+sky_material = SubResource("ProceduralSkyMaterial_jtyxs")
+
+[sub_resource type="Environment" id="Environment_75n51"]
+background_mode = 1
+background_color = Color(0.482353, 0.509804, 0.901961, 1)
+sky = SubResource("Sky_nj3uc")
+ambient_light_source = 2
+ambient_light_color = Color(0.968627, 0.835294, 0.858824, 1)
+ambient_light_energy = 0.6
+tonemap_mode = 2
+ssao_enabled = true
+ssil_enabled = true
+sdfgi_enabled = true
+sdfgi_use_occlusion = true
+sdfgi_bounce_feedback = 0.52
+sdfgi_energy = 1.5
+glow_enabled = true
+fog_enabled = true
+fog_light_color = Color(0.509804, 0.87451, 0.890196, 1)
+fog_density = 0.0001
+adjustment_enabled = true
+adjustment_brightness = 1.2
+adjustment_contrast = 1.2
+adjustment_saturation = 1.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gv0lf"]
+albedo_color = Color(0, 0.533333, 1, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_p8aqs"]
+material = SubResource("StandardMaterial3D_gv0lf")
+size = Vector2(600, 250)
+
+[node name="Overworld" instance=ExtResource("1_b0lcc")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." index="0"]
+environment = SubResource("Environment_75n51")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." index="1"]
+light_color = Color(0.847474, 0.847474, 0.847474, 1)
+shadow_enabled = true
+shadow_opacity = 0.9
+shadow_blur = 4.5
+
+[node name="Player" parent="Entities" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.8085, -103.051)
+
+[node name="OverWorld Skin" parent="Environment" index="0" instance=ExtResource("2_ctd8k")]
+
+[node name="Water" type="MeshInstance3D" parent="Environment" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -42.2291, 267.477)
+mesh = SubResource("PlaneMesh_p8aqs")

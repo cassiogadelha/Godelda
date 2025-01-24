@@ -80,11 +80,7 @@ func _physics_process(delta: float) -> void:
 
 	move_logic(delta)
 	jump_logic(delta)
-	ability_logic()
-
-	if Input.is_action_just_pressed("ui_accept"):
-		hit()
-	
+	ability_logic()	
 	move_and_slide()
 
 func move_logic(delta: float) -> void:
@@ -131,9 +127,9 @@ func jump_logic(delta: float) -> void:
 	else:
 		godette_skin.set_move_state("Idle")
 
-	var gravity : float = jump_gravity if velocity.y > 0.0 else fall_gravity
+		var gravity : float = jump_gravity if velocity.y > 0.0 else fall_gravity
 
-	velocity.y += gravity * delta
+		velocity.y += gravity * delta
 
 func ability_logic() -> void:
 	if Input.is_action_just_pressed("ability"):

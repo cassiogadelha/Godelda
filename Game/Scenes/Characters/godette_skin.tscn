@@ -213,4 +213,6 @@ autostart = true
 
 [connection signal="timeout" from="BlinkTimer" to="." method="_on_blink_timer_timeout"]
 
+[editable path="Rig/Skeleton3D/RightHandSlot/Sword"]
+[editable path="Rig/Skeleton3D/RightHandSlot/Sword/Model"]
 [editable path="Rig/Skeleton3D/RightHandSlot/wand2"]
