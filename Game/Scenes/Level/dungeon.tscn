@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bax6eu1qkp7um"]
+[gd_scene load_steps=11 format=3 uid="uid://bax6eu1qkp7um"]
 
 [ext_resource type="PackedScene" uid="uid://cbqeh2avabg1x" path="res://Scenes/Level/level.tscn" id="1_o5l8o"]
 [ext_resource type="MeshLibrary" uid="uid://bf7wh601k313w" path="res://Mesh Libraries/Dungeon/dungeon.tres" id="2_kldnu"]
@@ -6,7 +6,48 @@
 [ext_resource type="PackedScene" uid="uid://chw0pqeh5pgfm" path="res://Assets/graphics/environment/dungeon objects/stool.glb" id="4_0tevi"]
 [ext_resource type="PackedScene" uid="uid://bhqt5vgwxv68w" path="res://Assets/graphics/environment/dungeon objects/pillar.glb" id="5_egckb"]
 
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mvii2"]
+sky_top_color = Color(0.513866, 0.409866, 0.501981, 1)
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_bottom_color = Color(0.0590545, 0.0450471, 0.029574, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_i1trh"]
+sky_material = SubResource("ProceduralSkyMaterial_mvii2")
+
+[sub_resource type="Environment" id="Environment_fpqqj"]
+background_mode = 2
+sky = SubResource("Sky_i1trh")
+ambient_light_source = 2
+ambient_light_color = Color(0.780392, 0.780392, 0.780392, 1)
+tonemap_mode = 2
+ssr_enabled = true
+ssao_enabled = true
+ssil_enabled = true
+sdfgi_enabled = true
+sdfgi_use_occlusion = true
+glow_enabled = true
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.02
+adjustment_enabled = true
+adjustment_brightness = 1.2
+adjustment_contrast = 1.2
+adjustment_saturation = 1.2
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_8qscq"]
+dof_blur_far_enabled = true
+dof_blur_far_distance = 150.0
+dof_blur_far_transition = 250.0
+
+[sub_resource type="FogMaterial" id="FogMaterial_x5n4h"]
+density = 1.4
+emission = Color(0.103744, 0.103744, 0.103744, 1)
+
 [node name="Level" instance=ExtResource("1_o5l8o")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." index="0"]
+environment = SubResource("Environment_fpqqj")
+camera_attributes = SubResource("CameraAttributesPractical_8qscq")
 
 [node name="Player" parent="Entities" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.28436, 0)
@@ -29,28 +70,42 @@ metadata/_editor_floor_ = Vector3(0, 2, 0)
 [node name="table" parent="Environment" index="2" instance=ExtResource("3_vwve7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0247, 1.05, 5.43465)
 
-[node name="stool" parent="." index="3" instance=ExtResource("4_0tevi")]
+[node name="Objects" type="Node3D" parent="Environment" index="3"]
+
+[node name="stool" parent="Environment/Objects" index="0" instance=ExtResource("4_0tevi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.89693, 1.04735, 3.91475)
 
-[node name="stool2" parent="." index="4" instance=ExtResource("4_0tevi")]
+[node name="stool2" parent="Environment/Objects" index="1" instance=ExtResource("4_0tevi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.3191, 1.04735, 3.91475)
 
-[node name="pillar" parent="." index="5" instance=ExtResource("5_egckb")]
+[node name="pillar" parent="Environment/Objects" index="2" instance=ExtResource("5_egckb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1, 34)
 
-[node name="pillar2" parent="." index="6" instance=ExtResource("5_egckb")]
+[node name="pillar2" parent="Environment/Objects" index="3" instance=ExtResource("5_egckb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.817, 1.02, 36.1597)
 
-[node name="pillar3" parent="." index="7" instance=ExtResource("5_egckb")]
+[node name="pillar3" parent="Environment/Objects" index="4" instance=ExtResource("5_egckb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.326, 1.02, 55.6062)
 
-[node name="pillar4" parent="." index="8" instance=ExtResource("5_egckb")]
+[node name="pillar4" parent="Environment/Objects" index="5" instance=ExtResource("5_egckb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.5641, 1.02, 66.3226)
 
-[node name="pillar5" parent="." index="9" instance=ExtResource("5_egckb")]
+[node name="pillar5" parent="Environment/Objects" index="6" instance=ExtResource("5_egckb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.8083, 1.02, 71.596)
 
-[node name="table" parent="." index="10" instance=ExtResource("3_vwve7")]
+[node name="table" parent="Environment/Objects" index="7" instance=ExtResource("3_vwve7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.5061, 1.02, 69.1273)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." index="4"]
+light_color = Color(0.4, 0.4, 0.4, 1)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="." index="5"]
+transform = Transform3D(-0.859986, -0.139329, -0.490929, -0.318182, 0.898517, 0.30237, 0.39898, 0.416239, -0.817044, -0.155, 5.359, -4.322)
+
+[node name="FogVolume" type="FogVolume" parent="." index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.6531, 0, 35.0978)
+size = Vector3(110.083, 2, 142.619)
+material = SubResource("FogMaterial_x5n4h")
 
 [editable path="Environment/table"]
