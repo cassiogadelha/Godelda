@@ -6,6 +6,8 @@ extends CharacterBody3D
 @export var jump_time_to_peak : float = 0.4
 @export var jump_time_to_descent : float = 0.3 
 
+@onready var run_particle: GPUParticles3D = $RunParticles
+
 @onready var jump_velocity : float = ((2.0 * jump_height) / jump_time_to_peak) * -1.0
 @onready var jump_gravity : float = ((-2.0 * jump_height) / (jump_time_to_peak * jump_time_to_peak))
 @onready var fall_gravity : float = ((-2.0 * jump_height) / (jump_time_to_descent * jump_time_to_descent))
@@ -116,6 +118,8 @@ func move_logic(delta: float) -> void:
 
 	if movement_input:
 		last_movement_input = movement_input.normalized()
+
+	run_particle.emitting = is_on_floor() and is_running and movement_input != Vector2.ZERO
 
 func jump_logic(delta: float) -> void:
 	if is_on_floor():
