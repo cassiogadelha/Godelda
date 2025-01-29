@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://ga53lke5j2lg"]
+
+[ext_resource type="Shader" path="res://Scenes/Characters/overlay.gdshader" id="1_ps4t4"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_ps4t4")
+shader_parameter/color = Color(0.376471, 0.764706, 0.290196, 1)
+shader_parameter/energy = 1.0
+shader_parameter/alpha = 0.0

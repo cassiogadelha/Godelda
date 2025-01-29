@@ -2,7 +2,7 @@ class_name Fireball
 extends Area3D
 
 var direction: Vector2
-const speed : float = 7 .0
+const speed : float = 7.0
 
 func _ready() -> void:
 	scale = Vector3(0.1, 0.1, 0.1)

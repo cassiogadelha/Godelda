@@ -75,6 +75,14 @@ func hit() -> void:
         $Timers/InvulnerableTimer.start()
         health -= 1
 
+        var tween: Tween = create_tween()
+        tween.tween_method(_hit_effect, 0.0, 0.5, 0.3)
+        tween.tween_method(_hit_effect, 0.5, 0.0, 0.1)
+
+func _hit_effect(value: float) -> void:
+    $Skin/Rig/Skeleton3D/Nagonford_Body.material_overlay.set_shader_parameter("color", Color.FIREBRICK)
+    $Skin/Rig/Skeleton3D/Nagonford_Body.material_overlay.set_shader_parameter("alpha", value) 
+
 func can_damage(value: bool) -> void:
     can_damage_toggle = value
 

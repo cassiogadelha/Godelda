@@ -18,7 +18,7 @@ extends CharacterBody3D
 @export var defend_speed : float = 2.0
 
 @onready var camera : Camera3D = $CameraController/Camera3D
-@onready var godette_skin : Node3D = $GodetteSkin
+@onready var godette_skin : GodetteSkin = $GodetteSkin
 @onready var ui: UIPlayer = $UI
 @onready var invul_timer: Timer = $Timers/InvulTimer
 
@@ -122,6 +122,12 @@ func move_logic(delta: float) -> void:
 
 	run_particle.emitting = is_on_floor() and is_running and movement_input != Vector2.ZERO
 
+	if is_on_floor() and movement_input:
+		if not $Sounds/StepSound.playing:
+			$Sounds/StepSound.playing = true
+	else:
+		$Sounds/StepSound.playing = false
+
 func jump_logic(delta: float) -> void:
 	if is_on_floor():
 		if Input.is_action_just_pressed("jump") and stamina >= 20:
@@ -142,6 +148,7 @@ func ability_logic() -> void:
 		if weapon_active and stamina >= 5:
 			stamina -= 5
 			godette_skin.attack()
+			$Sounds/SwordSound.play()
 		else:
 			if energy >= 20:
 				godette_skin.cast_spell()
@@ -183,6 +190,7 @@ func shoot_magic(pos: Vector3) -> void:
 		cast_spell.emit("fireball", pos, last_movement_input, 1.0)
 	else:
 		health += 1
+		godette_skin.heal_tween()
 
 
 func _on_energy_recovery_timer_timeout() -> void:
