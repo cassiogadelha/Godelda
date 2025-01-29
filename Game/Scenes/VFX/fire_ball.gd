@@ -2,7 +2,7 @@ class_name Fireball
 extends Area3D
 
 var direction: Vector2
-const speed : float = 5.0
+const speed : float = 7 .0
 
 func _ready() -> void:
 	scale = Vector3(0.1, 0.1, 0.1)
@@ -16,5 +16,10 @@ func _on_body_entered(body:Node3D) -> void:
 		queue_free()
 
 func setup(_size: float) -> void:
+	$FireballMesh.rotation.y = - (direction.angle() + PI/2) + PI
 	var tween: Tween = create_tween()
 	tween.tween_property(self, "scale", Vector3.ONE * _size, 0.3)
+
+
+func _on_lifetime_timer_timeout() -> void:
+	queue_free()

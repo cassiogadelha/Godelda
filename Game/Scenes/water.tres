@@ -215,7 +215,6 @@ void fragment() {
 
 }
 "
-graph_offset = Vector2(-196.606, -256.513)
 varyings/texture_v = "0,4"
 nodes/vertex/0/position = Vector2(640, 160)
 nodes/vertex/2/node = SubResource("VisualShaderNodeInput_sfxat")
