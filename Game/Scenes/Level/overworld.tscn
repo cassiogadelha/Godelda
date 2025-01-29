@@ -1,8 +1,19 @@
-[gd_scene load_steps=11 format=3 uid="uid://civwb0sr8ycch"]
+[gd_scene load_steps=26 format=3 uid="uid://civwb0sr8ycch"]
 
 [ext_resource type="PackedScene" uid="uid://cbqeh2avabg1x" path="res://Scenes/Level/level.tscn" id="1_b0lcc"]
 [ext_resource type="PackedScene" uid="uid://c627psijjumq7" path="res://Scenes/bird.tscn" id="2_6x2pj"]
 [ext_resource type="PackedScene" uid="uid://qj3rc7155htl" path="res://Scenes/Level/overworld_skin.tscn" id="2_ctd8k"]
+[ext_resource type="PackedScene" uid="uid://d4jf8yq388htj" path="res://Scenes/water.tscn" id="4_6lhpj"]
+[ext_resource type="Script" path="res://addons/proton_scatter/src/scatter.gd" id="5_bh0u6"]
+[ext_resource type="Script" path="res://addons/proton_scatter/src/stack/modifier_stack.gd" id="6_uigle"]
+[ext_resource type="Script" path="res://addons/proton_scatter/src/modifiers/base_modifier.gd" id="7_7omte"]
+[ext_resource type="Script" path="res://addons/proton_scatter/src/modifiers/create_inside_random.gd" id="8_xkcwe"]
+[ext_resource type="Script" path="res://addons/proton_scatter/src/modifiers/randomize_transforms.gd" id="9_s2yf6"]
+[ext_resource type="Script" path="res://addons/proton_scatter/src/modifiers/relax.gd" id="10_cutmo"]
+[ext_resource type="Script" path="res://addons/proton_scatter/src/modifiers/project_on_geometry.gd" id="11_p1lpy"]
+[ext_resource type="Script" path="res://addons/proton_scatter/src/scatter_item.gd" id="12_nu5qn"]
+[ext_resource type="Script" path="res://addons/proton_scatter/src/scatter_shape.gd" id="13_wdryg"]
+[ext_resource type="Script" path="res://addons/proton_scatter/src/shapes/sphere_shape.gd" id="14_qvsfm"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jtyxs"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -48,12 +59,61 @@ _data = {
 }
 point_count = 92
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gv0lf"]
-albedo_color = Color(0, 0.533333, 1, 1)
+[sub_resource type="Resource" id="Resource_v0kcw"]
+script = ExtResource("8_xkcwe")
+amount = 5000
+enabled = true
+override_global_seed = false
+custom_seed = 0
+restrict_height = true
+reference_frame = 1
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_p8aqs"]
-material = SubResource("StandardMaterial3D_gv0lf")
-size = Vector2(600, 250)
+[sub_resource type="Resource" id="Resource_33ie7"]
+script = ExtResource("9_s2yf6")
+position = Vector3(0.15, 0.15, 0.15)
+rotation = Vector3(20, 360, 20)
+scale = Vector3(0.1, 0.1, 0.1)
+enabled = true
+override_global_seed = false
+custom_seed = 0
+restrict_height = false
+reference_frame = 2
+
+[sub_resource type="Resource" id="Resource_1pq4m"]
+script = ExtResource("10_cutmo")
+iterations = 3
+offset_step = 0.2
+consecutive_step_multiplier = 0.75
+use_computeshader = true
+enabled = true
+override_global_seed = false
+custom_seed = 0
+restrict_height = true
+reference_frame = 0
+
+[sub_resource type="Resource" id="Resource_tnkmq"]
+script = ExtResource("11_p1lpy")
+ray_direction = Vector3(0, -1, 0)
+ray_length = 5.0
+ray_offset = 5.0
+remove_points_on_miss = false
+align_with_collision_normal = false
+max_slope = 90.0
+collision_mask = 1
+exclude_mask = 0
+enabled = true
+override_global_seed = false
+custom_seed = 0
+restrict_height = false
+reference_frame = 0
+
+[sub_resource type="Resource" id="Resource_6cmkv"]
+script = ExtResource("6_uigle")
+stack = Array[ExtResource("7_7omte")]([SubResource("Resource_v0kcw"), SubResource("Resource_33ie7"), SubResource("Resource_1pq4m"), SubResource("Resource_tnkmq")])
+
+[sub_resource type="Resource" id="Resource_g8bsm"]
+script = ExtResource("14_qvsfm")
+radius = 16.51
 
 [node name="Overworld" instance=ExtResource("1_b0lcc")]
 
@@ -75,14 +135,31 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 115.784, 60.9972)
 curve = SubResource("Curve3D_4eai3")
 
 [node name="Bird" parent="Entities/Path3D" index="0" instance=ExtResource("2_6x2pj")]
-transform = Transform3D(0.65005, -0.0527052, 0.758062, 0, 0.997592, 0.0693588, -0.759892, -0.0450866, 0.648484, -199.348, 36.129, 304.058)
+transform = Transform3D(0.650056, -0.052706, 0.758056, -5.58794e-09, 0.997592, 0.0693603, -0.759887, -0.0450881, 0.64849, -199.348, 36.129, 304.058)
 use_model_front = true
 
 [node name="OverWorld Skin" parent="Environment" index="0" instance=ExtResource("2_ctd8k")]
 
-[node name="Water" type="MeshInstance3D" parent="Environment" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -42.2291, 267.477)
-mesh = SubResource("PlaneMesh_p8aqs")
+[node name="Water" parent="Environment" index="1" instance=ExtResource("4_6lhpj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -51.539, 220.649)
+
+[node name="Grass" type="Node3D" parent="Environment" index="2"]
+
+[node name="ProtonScatter" type="Node3D" parent="Environment/Grass" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.9673, -84.888)
+script = ExtResource("5_bh0u6")
+modifier_stack = SubResource("Resource_6cmkv")
+Performance/use_chunks = true
+Performance/chunk_dimensions = Vector3(15, 15, 15)
+
+[node name="ScatterItem" type="Node3D" parent="Environment/Grass/ProtonScatter" index="0"]
+script = ExtResource("12_nu5qn")
+path = "res://Scenes/Level/grass_blade.tscn"
+
+[node name="ScatterShape" type="Node3D" parent="Environment/Grass/ProtonScatter" index="1"]
+transform = Transform3D(1, 0, -2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 0, 0, 6.74754)
+script = ExtResource("13_wdryg")
+shape = SubResource("Resource_g8bsm")
 
 [node name="Camera3D" type="Camera3D" parent="." index="5"]
 transform = Transform3D(1, 0, 0, 0, 0.890213, 0.455545, 0, -0.455545, 0.890213, 0, 17.519, -95.701)

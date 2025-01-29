@@ -32,3 +32,8 @@ material = SubResource("StandardMaterial3D_7h51m")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.420664, 0.309962)
 process_material = SubResource("ParticleProcessMaterial_f0db8")
 draw_pass_1 = SubResource("SphereMesh_dbkyb")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="GPUParticles3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0437601, 0.100883, 0.0492377)
+light_color = Color(1, 0.305882, 0, 1)
+light_bake_mode = 0
