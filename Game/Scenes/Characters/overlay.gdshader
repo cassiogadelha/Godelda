@@ -10,4 +10,3 @@ void fragment() {
 	ALBEDO = color * energy;
 	ALPHA = alpha;
 }
-

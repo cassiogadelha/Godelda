@@ -17,4 +17,3 @@ void fragment() {
 	ALPHA = step(-0.15, noise - UV.y);
 	ALPHA_SCISSOR_THRESHOLD = 0.7;
 }
-
